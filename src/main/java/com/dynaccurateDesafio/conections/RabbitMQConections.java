@@ -12,38 +12,37 @@ import com.dynaccurate.constantes.RabbitMQConstantes;
 
 @Component
 public class RabbitMQConections {
-	
-	private static final String NomeExchange = "amq.direct" ;
-	
+
+	private static final String NomeExchange = "amq.direct";
+
 	private AmqpAdmin admin;
-	
+
 	public RabbitMQConections(AmqpAdmin admin) {
-		this.admin=admin;
-		
+		this.admin = admin;
+
 	}
-	
+
 	private Queue fila(String nomeFila) {
-		return new Queue(nomeFila,true,false,false);
+		return new Queue(nomeFila, true, false, false);
 	}
-	
-	private DirectExchange trocaDireta () {
+
+	private DirectExchange trocaDireta() {
 		return new DirectExchange(NomeExchange);
 	}
-	
-	private Binding relacionamento (Queue fila, DirectExchange troca) {
-		return new Binding(fila.getName(),Binding.DestinationType.QUEUE,
-				troca.getName(), fila.getName(), null);
+
+	private Binding relacionamento(Queue fila, DirectExchange troca) {
+		return new Binding(fila.getName(), Binding.DestinationType.QUEUE, troca.getName(), fila.getName(), null);
 	}
-	
+
 	@PostConstruct
 	private void adiciona() {
 		Queue filaEvento = this.fila(RabbitMQConstantes.FILA_EVENTO);
 		DirectExchange troca = this.trocaDireta();
 		Binding conexao = this.relacionamento(filaEvento, troca);
-		
+
 		this.admin.declareQueue(filaEvento);
 		this.admin.declareExchange(troca);
 		this.admin.declareBinding(conexao);
-		
+
 	}
 }

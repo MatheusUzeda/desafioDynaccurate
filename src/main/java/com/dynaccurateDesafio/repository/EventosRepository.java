@@ -10,5 +10,4 @@ public interface EventosRepository extends MongoRepository<Evento, String> {
 
 	Page<Evento> findByIdUsuario(String id, Pageable paginacao);
 
-
 }

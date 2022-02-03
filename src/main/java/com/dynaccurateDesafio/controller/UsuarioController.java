@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dynaccurateDesafio.model.Usuario;
+import com.dynaccurate.form.UsuarioForm;
+import com.dynaccurateDesafio.dto.UsuarioDto;
 import com.dynaccurateDesafio.service.UsuarioCrudService;
 
 @RestController
@@ -24,8 +25,8 @@ public class UsuarioController {
 
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<?> obterUsuario(@PathVariable String id) {
-		return this.crudService.obterUsuarioPeloId(id).isPresent()
-				? ResponseEntity.ok(this.crudService.obterUsuarioPeloId(id))
+		UsuarioDto usuario = this.crudService.obterUsuarioPeloId(id);
+		return usuario != null ? ResponseEntity.ok(usuario)
 				: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado!");
 	}
 
@@ -35,13 +36,13 @@ public class UsuarioController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> realizarCadastroUsuario(@RequestBody Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(this.crudService.cadastrarUsuario(usuario));
+	public ResponseEntity<?> realizarCadastroUsuario(@RequestBody UsuarioForm form) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(this.crudService.cadastrarUsuario(form));
 	}
 
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<?> atualizacaoUsuario(@PathVariable String id, @RequestBody Usuario usuario) {
-		return ResponseEntity.ok(this.crudService.atualizarUsuario(id, usuario));
+	public ResponseEntity<?> atualizacaoUsuario(@PathVariable String id, @RequestBody UsuarioForm form) {
+		return ResponseEntity.ok(this.crudService.atualizarUsuario(id, form));
 	}
 
 	@DeleteMapping(path = "/{id}")

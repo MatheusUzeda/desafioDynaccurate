@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dynaccurate.dto.EventoDto;
+import com.dynaccurate.form.EventoForm;
 import com.dynaccurateDesafio.service.EventoService;
 
 @RestController
@@ -35,7 +35,7 @@ public class EventoController {
 	}
 
 	@PostMapping()
-	public ResponseEntity<?> cadastrarEvento(@RequestBody EventoDto evento) {
+	public ResponseEntity<?> cadastrarEvento(@RequestBody EventoForm evento) {
 		return this.eventoService.cadastrarEvento(evento) == null
 				? ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O identificador de usuário, precisa ser válido !")
 				: ResponseEntity.status(HttpStatus.CREATED).body(evento);

@@ -11,7 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.dynaccurate.constantes.RabbitMQConstantes;
-import com.dynaccurate.dto.EventoDto;
+import com.dynaccurate.form.EventoForm;
+import com.dynaccurateDesafio.dto.EventoDto;
 import com.dynaccurateDesafio.model.Evento;
 import com.dynaccurateDesafio.repository.EventosRepository;
 
@@ -26,26 +27,29 @@ public class EventoService {
 	@Autowired
 	private UsuarioCrudService crudService;
 
-	public EventoDto cadastrarEvento(EventoDto evento) {
-		if(this.crudService.obterUsuarioPeloId(evento.getIdUsuario()).isPresent()) {
+	public EventoDto cadastrarEvento(EventoForm evento) {
+		EventoDto eventoDto = new EventoDto(evento);
+		if(this.crudService.obterUsuarioPeloId(eventoDto.getIdUsuario()) != null) {
 			this.rabbitMQService.enviaMensagem(RabbitMQConstantes.FILA_EVENTO, evento);
-			return evento;
+			return eventoDto;
 		}
-		evento = null;
-		return evento;
+		eventoDto = null;
+		return eventoDto;
 
 	}
 
-	public Page<Evento> obterEventosUsuario(String id, String data, Pageable paginacao) {
+	public Page<EventoDto> obterEventosUsuario(String id, String data, Pageable paginacao) {
 		if (data == null) {
-			return this.eventosRepository.findByIdUsuario(id, paginacao);
+			 Page<Evento> eventos = this.eventosRepository.findByIdUsuario(id, paginacao);
+			 return eventos.map(EventoDto::new);
 		}
 		Page<Evento> eventosUsuario = this.eventosRepository.findByIdUsuario(id, paginacao);
 		List<Evento> collect = eventosUsuario.stream()
 				.filter(t -> DateTimeFormatter.ofPattern("dd/MM/yyyy").format(t.getEventDateTime()).equals(data))
 				.collect(Collectors.toList());
 		Page<Evento> eventos = new PageImpl<Evento>(collect, paginacao, collect.size());
-		return eventos;
+		return eventos.map(EventoDto::new);
+	
 	}
 
 }

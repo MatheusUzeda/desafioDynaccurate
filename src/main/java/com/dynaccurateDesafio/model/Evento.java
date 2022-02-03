@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.dynaccurateDesafio.dto.EventoDto;
+
 @Document
 public class Evento {
 
@@ -16,6 +18,12 @@ public class Evento {
 	private LocalDateTime eventDateTime;
 	
 	private String idUsuario;
+
+	public Evento(EventoDto dto) {
+		this.eventType = dto.getEventType();
+		this.eventDateTime = dto.getEventDateTime();
+		this.idUsuario = dto.getIdUsuario();
+	}
 
 	public String getId() {
 		return id;
@@ -36,6 +44,12 @@ public class Evento {
 	public LocalDateTime getEventDateTime() {
 		return eventDateTime;
 	}
+	
+
+	public void setEventDateTime(LocalDateTime eventDateTime) {
+		this.eventDateTime = eventDateTime;
+	}
+
 	
 	public String getIdUsuario() {
 		return idUsuario;
