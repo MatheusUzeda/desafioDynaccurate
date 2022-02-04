@@ -18,6 +18,9 @@ public class Evento {
 	private LocalDateTime eventDateTime;
 	
 	private String idUsuario;
+	
+	public Evento() {	
+	}
 
 	public Evento(EventoDto dto) {
 		this.eventType = dto.getEventType();
