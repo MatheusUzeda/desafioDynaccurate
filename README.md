@@ -12,9 +12,9 @@ Requisitos: Java11, MongoDb e RabbitMq
 
 1. Clone o projeto desafioDynaccurate (Api)
 
-2. No mesmo work-space, clone o projeto consumidorEvento (Trabalhador), repositório: 
+2. No mesmo work-space, clone o projeto consumidorEvento (Trabalhador), repositório: https://github.com/MatheusUzeda/consumerEvento.git 
 
-3. Clone também o projeto biblioteca (contém os objetos que serão serializados e desserializados), repositório:
+3. Clone também o projeto biblioteca (contém os objetos que serão serializados e desserializados), repositório: https://github.com/MatheusUzeda/bibliotecaDynaccurate.git
 
 > Importe esses três projetos para o eclipse ou sua IDE de preferência.
 
