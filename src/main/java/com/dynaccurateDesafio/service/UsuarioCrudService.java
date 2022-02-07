@@ -38,9 +38,10 @@ public class UsuarioCrudService {
 	}
 
 	public UsuarioDto atualizarUsuario(String id, UsuarioForm form) {
-		form.setId(id);
-		Usuario usuario = repository.save(new Usuario(form));
-		return new UsuarioDto(usuario);
+		Usuario usuario = new Usuario(form);
+		usuario.setId(id);
+		Usuario usuarioResponse = repository.save(usuario);
+		return new UsuarioDto(usuarioResponse);
 	}
 
 	public void excluirUsuario(String id) {

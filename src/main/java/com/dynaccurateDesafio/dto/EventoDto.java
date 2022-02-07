@@ -9,26 +9,23 @@ import com.dynaccurateDesafio.model.Evento;
 public class EventoDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private String id;
 
 	private String eventType;
 
-	private LocalDateTime eventDateTime;
+	private LocalDateTime eventDateTime = LocalDateTime.now();
 
 	private String idUsuario;
 
 	public EventoDto(Evento evento) {
-		this.id = evento.getId();
+
 		this.eventType = evento.getEventType();
 		this.eventDateTime = evento.getEventDateTime();
 		this.idUsuario = evento.getIdUsuario();
 	}
-	
+
 	public EventoDto(EventoForm evento) {
-		this.id = evento.getId();
+
 		this.eventType = evento.getEventType();
-		this.eventDateTime = evento.getEventDateTime();
 		this.idUsuario = evento.getIdUsuario();
 	}
 
@@ -44,10 +41,6 @@ public class EventoDto implements Serializable {
 		return eventDateTime;
 	}
 
-	public void setEventDateTime(LocalDateTime eventDateTime) {
-		this.eventDateTime = eventDateTime;
-	}
-
 	public String getIdUsuario() {
 		return idUsuario;
 	}
@@ -55,15 +48,5 @@ public class EventoDto implements Serializable {
 	public void setIdUsuario(String idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	
 
 }

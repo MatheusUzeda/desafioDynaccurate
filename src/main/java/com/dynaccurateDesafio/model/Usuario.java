@@ -15,14 +15,13 @@ public class Usuario {
 
 	private String nickName;
 
-	private LocalDateTime registrationDate;
+	private LocalDateTime registrationDate = LocalDateTime.now();
 
 	public Usuario() {
 	}
 
 	public Usuario(UsuarioForm form) {
 		this.nickName = form.getNickName();
-		this.registrationDate = form.getRegistrationDate();
 	}
 
 	public String getId() {
@@ -43,10 +42,6 @@ public class Usuario {
 
 	public LocalDateTime getRegistrationDate() {
 		return registrationDate;
-	}
-
-	public void setRegistrationDate(LocalDateTime registrationDate) {
-		this.registrationDate = registrationDate;
 	}
 
 }
